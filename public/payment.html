@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+        .container {
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            padding: 10px;
+            font-size: 16px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: calc(100% - 22px);
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Pagar</h1>
+        <p id="menuDetails"></p>
+        <form id="payment-form">
+            <input type="text" id="cardNumber" placeholder="Introduce número de tarjeta (6 dígitos)" maxlength="6"         <button type="submit">Completar Pago</button>
+        </form>
+    </div>
+    <script>
+        function getQueryParams() {
+            const params = new URLSearchParams(window.location.search);
+            return {
+                menu: params.get('menu'),
+                price: params.get('price')
+            };
+        }
+
+        async function completePayment(event) {
+            event.preventDefault();
+            const cardNumber = document.getElementById('cardNumber').value;
+            const { menu, price } = getQueryParams();
+
+            if (cardNumber.length === 6) {
+                try {
+                    console.log('Sending request to completePayment function');
+                    const response = await fetch('https://europe-southwest1-app-menu-427017.cloudfunctions.net/completePayment', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ menu, price, cardNumber })
+                    });
+                    console.log('Response received');
+                    const result = await response.text();
+                    alert(result);
+                    window.location.href = 'index.html'; // Redirigir a la página de inicio
+                } catch (error) {
+                    console.error('Error completing payment:', error);
+                    alert('Error al completar el pago. Inténtalo de nuevo más tarde.');
+                }
+            } else {
+                alert('Por favor introduce un número de tarjeta válido de 6 dígitos.');
+            }
+        }
+
+        window.onload = function() {
+            const { menu, price } = getQueryParams();
+            document.getElementById('menuDetails').innerText = `Estás pagando por el menú: ${menu} - $${price}`;
+        };
+
+        document.getElementById('payment-form').addEventListener('submit', completePayment);
+    </script>
+</body>
+</html>

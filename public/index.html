@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu App</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+        .container {
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        .menu {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            text-align: left;
+        }
+        .menu input[type="radio"] {
+            margin-right: 10px;
+        }
+        label {
+            display: flex;
+            align-items: center;
+            margin: 0;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>My healthy Menu</h1>
+        <form id="menuForm">
+            <div class="menu">
+                <input type="radio" id="menu1" name="menu" value="Vegetarian">
+                <label for="menu1">
+                    <strong>Vegetarian:</strong> Salad, pasta and piece of fruit - $15
+                </label>
+            </div>
+            <div class="menu">
+                <input type="radio" id="menu2" name="menu" value="Normal">
+                <label for="menu2">
+                    <strong>Normal:</strong> Pig's steak, chips and piece of cake - $17
+                </label>
+            </div>
+            <div class="menu">
+                <input type="radio" id="menu3" name="menu" value="Macrobiotic">
+                <label for="menu3">
+                    <strong>Macrobiotic:</strong> Fish, chips and piece of fruit - $15
+                </label>
+            </div>
+            <button type="button" onclick="submitForm()">Hacer Pedido</button>
+        </form>
+    </div>
+    <script>
+        function submitForm() {
+            const form = document.getElementById('menuForm');
+            const selectedMenu = form.menu.value;
+            if (selectedMenu) {
+                let price;
+                switch (selectedMenu) {
+                    case 'Vegetarian':
+                        price = 15;
+                        break;
+                    case 'Normal':
+                        price = 17;
+                        break;
+                    case 'Macrobiotic':
+                        price = 15;
+                        break;
+                }
+                window.location.href = `order.html?menu=${selectedMenu}&price=${price}`;
+            } else {
+                alert('Por favor selecciona un menú.');
+            }
+        }
+    </script>
+</body>
+</html>
