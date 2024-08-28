@@ -5,16 +5,19 @@ steps:
   - '-t'
   - 'gcr.io/app-menu-427017/menu-app-frontend'
   - '.'
+
 - name: 'gcr.io/cloud-builders/docker'
   args:
   - 'push'
   - 'gcr.io/app-menu-427017/menu-app-frontend'
-- name: 'gcloud'
+
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  entrypoint: 'gcloud'
   args:
   - 'run'
   - 'deploy'
   - 'menu-app'
   - '--image=gcr.io/app-menu-427017/menu-app-frontend'
-  
   - '--platform=managed'
   - '--region=europe-southwest1'
+  - '--allow-unauthenticated'
