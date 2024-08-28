@@ -5,8 +5,6 @@ steps:
   - '-t'
   - 'gcr.io/app-menu-427017/menu-app-frontend'
   - '.'
-  options:
-    logging: CLOUD_LOGGING_ONLY
 
 - name: 'gcr.io/cloud-builders/docker'
   args:
@@ -23,3 +21,6 @@ steps:
   - '--platform=managed'
   - '--region=europe-southwest1'
   - '--allow-unauthenticated'
+
+options:
+  logging: CLOUD_LOGGING_ONLY
