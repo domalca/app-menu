@@ -19,7 +19,7 @@ steps:
   - 'menu-app'
   - '--image=gcr.io/app-menu-427017/menu-app-frontend'
   - '--platform=managed'
-  - '--region=europe-southwest1'
+  - '--region=europe-west1'
   - '--allow-unauthenticated'
 
 options:
